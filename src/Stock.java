@@ -1,6 +1,6 @@
 /* class Stock.
  *
- * ver.: 0.0.1
+ * ver.: 0.0.2
  *
  * Информации об авторском параве нет
  */
@@ -8,43 +8,65 @@
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
+
 
 /** Реализация структуры данных List.
- * @version   0.1 27 Oct 2018
+ * @version   0.2 12 Nov 2018
  * @author    Georgiy Krasko
  */
 
-public class Stock {
+public class Stock<T> implements Iterable<T> {
 
-    public static void aL() {
-        ArrayList<String> equipment = new ArrayList<>();
+    private List<T> product;
+
+    public Stock() {
+        this.product = new ArrayList<>();
+   }
+
+    public void add(final T prod) {
+        product.add(prod);
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private int currentIndex = 0;
+            private T current = product.get(currentIndex);
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < product.size() && current != null;
+            }
+
+            @Override
+            public T next() {
+                return product.get(currentIndex++);
+            }
+
+        };
+    }
+
+    public static void main(final String[] args) {
+        Stock<String> equipment = new Stock<>();
         equipment.add("Принтер");
         equipment.add("Ноутбук");
         equipment.add("Сканер");
         equipment.add("Проектор");
-        Iterator<String> it = equipment.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
+        equipment.add("Жеский диск");
+        equipment.add("Видеокарта");
+        equipment.add("МФУ");
+        equipment.add("Монитор");
+        equipment.add("DVD");
+        equipment.add("Процессор");
+        equipment.add("Системный блок");
+        equipment.add("Оперативная память");
+        for (String name: equipment) {
+            System.out.println(name);
         }
-    }
 
-    public static void lL() {
-        LinkedList<String> equipment = new LinkedList<>();
-        equipment.add("Компьютер");
-        equipment.add("Колонки");
-        equipment.add("Клавиатура");
-        equipment.add("Наушники");
-        Iterator<String> it = equipment.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
-    }
-
-    public static void main(final String[] args) {
-        aL();
-        lL();
     }
 }
+
 
 
